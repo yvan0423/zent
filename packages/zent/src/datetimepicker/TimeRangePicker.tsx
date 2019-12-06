@@ -7,11 +7,9 @@ import * as React from 'react';
 import { PureComponent } from 'react';
 import cx from 'classnames';
 import { Omit } from 'utility-types';
-import isString from 'lodash-es/isString';
-import isDate from 'lodash-es/isDate';
 
+import isDate from '../utils/isDate';
 import { I18nReceiver as Receiver } from '../i18n';
-
 import { commonProps, noop } from './constants';
 import TimePicker from './TimePicker';
 import { DatePickers } from './common/types';
@@ -23,7 +21,7 @@ const END = 'end';
 function compatibleInterface(prop) {
   if (!prop) return [];
   if (Array.isArray(prop)) return prop;
-  return isString(prop) || isDate(prop) ? [prop, prop] : prop;
+  return typeof prop === 'string' || isDate(prop) ? [prop, prop] : prop;
 }
 
 export interface ITimeRangePickerProps
@@ -32,7 +30,7 @@ export interface ITimeRangePickerProps
     'placeholder'
   > {
   placeholder: [string?, string?];
-  isFooterVisble?: boolean;
+  isFooterVisible?: boolean;
   showSecond?: boolean;
   hourStep?: number;
   minuteStep?: number;
@@ -44,7 +42,7 @@ export class TimeRangePicker extends PureComponent<ITimeRangePickerProps> {
   static defaultProps = {
     ...commonProps,
     format: 'HH:mm:ss',
-    isFooterVisble: true,
+    isFooterVisible: true,
     hourStep: 1,
     minuteStep: 1,
     secondStep: 1,
