@@ -8,6 +8,82 @@ You can find detailed change logs for versions prior to 3.5.3 at [Github Log](gi
 - [Upgrade to 3.x](../migrating/3x)
 - [Upgrade to 2.1.x](../migrating/21x)
 
+### 8.0.1(2020-01-19)
+
+- `Upload`
+  - 🦀️ Use a different CSS class name from the old version
+  - 🦀️ Fix a pagination bug when removing items
+
+### 8.0.0(2020-01-17)
+
+- 🎉 Rewrite `Upload`, use `@zent/compat` if you want the old version
+- 🎉 New component `Waypoint`
+- 🎉 New component `Dropdown`
+- `Affix`
+  - ✨ Rewrite using `Waypoint`
+  - ✨ `offsetTop` has no default value
+  - ✨ `offsetTop` and `offsetBottom` can be used together
+- `InfiniteScroller`
+  - ✨ Rewrite using `Waypoint`
+  - ✨ Remove `offset`, `useCapture` and `prefix`
+  - ✨ Rename `initialLoad` to `skipLoadOnMount`
+  - ✨ `hasMore` defaults to `false`
+  - ✨ `useWindow` defaults to `false`
+- ✨ Optimize event handlers in every place
+- `Icon`
+  - ✨ New icons `filter-o` and `scan-code-o`
+  - ✨ Rename `text-guide` to `text-guide-o`
+  - ✨ Rename `video-guide` to `video-guide-o`
+- ✨ `QuickDateRangePicker` can select a default preset on mount
+- ✨ Replace `tslint` with `eslint`
+- 🦀️ Update `Dialog` close button style
+- `Form`
+  - ✨ Add `useFieldValue` hook
+  - ✨ `Form` gets a `getSubmitValue` method
+  - 🦀️ Update error style
+  - 🦀️ Update TypeScript definition
+  - 🦀️ Export `FormDescription` component
+  - 🦀️ `FormSelectField` properly handles `withoutLabel`
+  - 🦀️ `layout` is optional
+- 🦀️ Fix `CopyButton` TypeScript definition
+- 🦀️ Update `Pagination` font style
+- `Cascader`
+  - ✨ Add support to `disabled`
+  - ✨ Remove `prefix`
+  - 🦀️ `onChange` is passed the same option item from props
+  - 🦀️ Update placeholder text color
+  - 🦀️ Namespace all CSS selectors
+- `Select`
+  - ✨ Remove `prefix`
+  - 🦀️ Update caret style
+  - 🦀️ Namespace all CSS selectors
+- 🦀️ Fix `Rate` icon issue when using fraction values
+- 🦀️ Fix incorrect rewrite rules used in `babel-plugin-zent`
+
+### 7.4.3(2019-12-19)
+
+- 🦀️ Fix `FormSelectField`'s `destroyOnUnmount` not working
+- 🦀️ Update `Form` TypeScript definition
+- 🦀️ All props are under `props` in `FormNumberInputField`(`integer`) and `FormSelectField`(`tags`, `data`)
+- 🦀️ Update form error style
+
+### 7.4.2(2019-12-13)
+
+- 🦀️ Fix a style issue in `Grid`
+- 🦀️ Fix TypeScript definition in `DateRangeQuickPicker`
+
+### 7.4.1(2019-12-13)
+
+- ✨ New icons：`doc`, `video`, `audio`
+- ✨ Replace `tinycolor2` with an internal slim version
+- 🦀️ Fix SSR for `Layout`
+- 🦀️ Add back support for `a.b.c` for column name in `Grid`, only for compatibility, not recommended for daily use
+- 🦀️ Fix repeated initialization in `Sortable` and TypeScript definition bugs
+- 🦀️ Fix `TextMark` TypeScript definition
+- 🦀️ Enlarge icon size in time pickers
+- 🦀️ Change `title` to `ReactNode` in `BlockHeader`
+- 🦀️ Cleanup unused `createAlias` usage
+
 ### 7.4.0(2019-12-06)
 
 - ✨ New `Tooltip` component
@@ -73,7 +149,7 @@ This is major release with lots of breaking changes, read the [full change log](
 
 ### 6.6.2 (2019-02-26)
 
-- `Form` 
+- `Form`
   - 🦀️ Fix field error even if async validation is passed
   - 🦀️ Update `createForm` TypeScript definition
 - 🦀️ Handle DOM not exist exception for `Affix` and `Avatar`
@@ -157,7 +233,7 @@ This is major release with lots of breaking changes, read the [full change log](
 
 ### 6.1.0 (2018-08-03)
 
-- `Grid` 
+- `Grid`
   - ✨ Support a default text for each column
   - 🦀️ Fix `selection.getCheckboxProps` not updated
 - ✨ Add some new `Icon`s
@@ -199,7 +275,7 @@ This is major release with lots of breaking changes, read the [full change log](
   - ✨ Add missing `TypeScript` definition
   - ✨ Add support for row expansion using the same `expandation` prop as `Table`
   - ✨ Add a new `onExpand` callback when a row is expanded
-  - ✨ Support page size in `onChange` 
+  - ✨ Support page size in `onChange`
   - 🦀️ Remove `cloneDeep` usage，cloning a react element in React 16 results an error
   - 🦀️ Fix `rowKey` not working
   - 📚 Update documentation
@@ -396,10 +472,10 @@ If you rely on `zent-select` when overwriting `Select` popover style, use `zent-
 ### 4.0.0 (2018-01-23)
 
 - 💥 Remove combine mode in `DateRangePicker`, `type` prop is removed.
-- `Upload` 
+- `Upload`
   - ✨ Supports file groups
   - ✨ Supports i18n
-- ✨ Add support for icons in `Menu` 
+- ✨ Add support for icons in `Menu`
 - `DatePicker`
   - 🦀️ Fix minimum time not respected in some cases
   - 🦀️ Fix minimum time test bug
@@ -452,11 +528,11 @@ If you rely on `zent-select` when overwriting `Select` popover style, use `zent-
 - ✨ `Sweetalert` can configure close button and click on mask to close
 - 🦀️ Fix `DateRangePicker` disabled style
 - 🦀️ Fix `Loading` not centered
-- 🦀️ Fix `DatePicker` wrong value in `onChange` 
+- 🦀️ Fix `DatePicker` wrong value in `onChange`
 - 🦀️ Fix `NumberInput` inconsistent `onBlur` and `onChange` values
 - 🦀️ Fix `Upload` image order after uploading
 - 🦀️ Fix `Select` item order in tag mode
-- 🦀️ Fix can not edit hex in  `ColorPicker` 
+- 🦀️ Fix can not edit hex in  `ColorPicker`
 - 🦀️ Fix `textarea` height tingle
 - 🦀️ Fix some typo
 - 🦀️ Fix `yarn new-component` command

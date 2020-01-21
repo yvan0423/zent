@@ -11,8 +11,11 @@ import { I18nReceiver as Receiver, II18nLocaleTimePicker } from '../i18n';
 
 import QuarterPanel from './quarter/QuarterPanel';
 import { dayStart, dayEnd, formatDate, parseDate } from './utils';
-import { noop, popPositionMap, commonProps } from './constants';
+import { popPositionMap, commonProps } from './constants';
+import noop from '../utils/noop';
 import { DatePickers } from './common/types';
+import Icon from '../icon';
+import warning from '../utils/warning';
 
 const quarterMonthMap = {
   0: 0,
@@ -60,7 +63,7 @@ function extractStateFromProps(props: IQuarterPickerProps) {
       showPlaceholder = false;
       selected = actived = tmp;
     } else {
-      console.warn("date and format don't match."); // eslint-disable-line
+      warning(false, "date and format don't match.");
       showPlaceholder = true;
       actived = dayStart();
     }
@@ -279,11 +282,12 @@ export class QuarterPicker extends PureComponent<IQuarterPickerProps, any> {
                       disabled={disabled}
                       autoComplete={autoComplete}
                     />
-                    <span className="zenticon zenticon-calendar-o" />
+                    <Icon className="picker-input--icon" type="calendar-o" />
                     {canClear && (
-                      <span
+                      <Icon
+                        className="picker-input--icon"
+                        type="close-circle"
                         onClick={this.onClearInput}
-                        className="zenticon zenticon-close-circle"
                       />
                     )}
                   </div>

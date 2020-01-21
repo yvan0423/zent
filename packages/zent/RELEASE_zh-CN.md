@@ -8,6 +8,82 @@
 - [3.x 升级指南](../migrating/3x)
 - [2.1.x 升级指南](../migrating/21x)
 
+### 8.0.1(2020-01-19)
+
+- `Upload`
+  - 🦀️ 新版使用和老版本不一样的类名
+  - 🦀️ 修复一个删除上传项时页数计算错误的问题
+
+### 8.0.0(2020-01-17)
+
+- 🎉 重写 `Upload` 组件，不兼容老版本；老版本请使用 `@zent/compat`
+- 🎉 增加 `Waypoint` 组件，这个组件抽象了元素移入/移除屏幕的逻辑
+- 🎉 增加 `Dropdown` 组件，只是对 `Popover` 组件的一层简单封装
+- `Affix`
+  - ✨ 使用 `Waypoint` 重写
+  - ✨ `offsetTop` 不再有默认值 0，必须自己传
+  - ✨ 支持同时设置 `offsetTop` 和 `offsetBottom`
+- `InfiniteScroller`
+  - ✨ 使用 `Waypoint` 重写
+  - ✨ 删除无用的 `offset`，`useCapture` 和 `prefix` 属性
+  - ✨ 重命名 `initialLoad` 为 `skipLoadOnMount`，意义相反，默认值行为没变
+  - ✨ `hasMore` 默认值修改为 `false`
+  - ✨ `useWindow` 默认值修改为 `false`
+- ✨优化了全局事件处理
+- `Icon`
+  - ✨ 增加两个新图标 `filter-o` 和 `scan-code-o`
+  - ✨ 重命名 `text-guide` 为 `text-guide-o`
+  - ✨ 重命名 `video-guide` 为 `video-guide-o`
+- ✨ `QuickDateRangePicker` 支持默认选中一个 preset
+- ✨ `eslint` 替换 `tslint`
+- 🦀️ 更新 `Dialog` 关闭按钮样式
+- `Form`
+  - ✨ 增加 `useFieldValue` hook
+  - ✨ `Form` 上增加 `getSubmitValue` 方法
+  - 🦀️ 更新错误样式
+  - 🦀️ 更新类型定义
+  - 🦀️ 导出 `FormDescription` 组件
+  - 🦀️ `FormSelectField` 透传 `withoutLabel` 属性
+  - 🦀️ `layout` 改为可选参数
+- 🦀️ 修复 `CopyButton` 的类型定义
+- 🦀️ 修复 `Pagination` 的字体样式
+- `Cascader`
+  - ✨ 支持 `disabled` 属性
+  - ✨ 删除 `prefix` 支持
+  - 🦀️ `onChange` 现在传入的是原始的 option 元素
+  - 🦀️ 更新 placeholder 文字颜色
+  - 🦀️ 所有 CSS 类名增加前缀
+- `Select`
+  - ✨ 删除 `prefix` 支持
+  - 🦀️ 更新组件的箭头图标，和其他组件保持一致
+  - 🦀️ 所有 CSS 类名增加前缀，例如 `tags__empty` 这种都被替换掉了
+- 🦀️ 修复 `Rate` 组件小数值时的图标显示问题
+- 🦀️ 修复部分组件 `babel-plugin-zent` 处理不正确的问题
+
+### 7.4.3(2019-12-19)
+
+- 🦀️ 修复 `FormSelectField` 的 `destroyOnUnmount` 没有生效的问题
+- 🦀️ 优化 `Form` 的类型定义
+- 🦀️ `FormNumberInputField`(`integer`) 以及 `FormSelectField`(`tags`, `data`) 的所有属性都归入 `props` 下，跟其他组件统一
+- 🦀️ 更新表单报错的样式
+
+### 7.4.2(2019-12-13)
+
+- 🦀️ 修复 `Grid` 一个样式问题
+- 🦀️ 修复 `DateRangeQuickPicker` 的类型问题
+
+### 7.4.1(2019-12-13)
+
+- ✨新增 3 个新图标：`doc`, `video`, `audio`
+- ✨ 使用一个内置的精简版替换 `tinycolor2`
+- 🦀️ 修复 `Layout` 组件不兼容 SSR 的问题
+- 🦀️ `Grid` 的 column name 支持 `a.b.c` 这种写法，不推荐使用，仅为和老版本兼容
+- 🦀️ 修复 `Sortable` 组件重复初始化的问题以及类型定义
+- 🦀️ 修复 `TextMark` 的类型定义
+- 🦀️ 增大时间选择组件的图标大小
+- 🦀️ 调整 `BlockHeader` 的 `title` 类型为 `ReactNode`
+- 🦀️ 清理了 `createAlias` 相关的无用代码
+
 ### 7.4.0(2019-12-06)
 
 - ✨ 新增 `Tooltip` 组件，用于展示提示信息
@@ -84,10 +160,10 @@
 
 ### 6.6.2 (2019-02-26)
 
-- `Form` 
+- `Form`
   - 🦀️ 修复异步检验通过还是报错的问题
   - 🦀️ 更新 `createForm` 的 TypeScript 定义
-- 🦀️ 增加 `Affix` 以及 `Avatar` DOM 节点不存在时的异常校验 
+- 🦀️ 增加 `Affix` 以及 `Avatar` DOM 节点不存在时的异常校验
 
 ### 6.6.1 (2019-01-30)
 
@@ -168,7 +244,7 @@
 
 ### 6.1.0 (2018-08-03)
 
-- `Grid` 
+- `Grid`
   - ✨ 支持给每一列设置一个默认的展示文案
   - 🦀️ 修复 `selection.getCheckboxProps` 没有实时更新的问题
 - ✨ 新增几个 `Icon`

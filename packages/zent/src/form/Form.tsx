@@ -14,10 +14,10 @@ import {
   FieldValue,
   FieldSetValue,
   useFieldArrayValue,
-  BasicModel,
   ValidateOption,
   createAsyncValidator,
   isAsyncValidator,
+  useFieldValue,
 } from 'formulr';
 import memorize from '../utils/memorize-one';
 import { FormContext, IFormChild, IZentFormContext } from './context';
@@ -33,10 +33,7 @@ export {
   IFormFieldModelProps,
   isViewDrivenProps,
   ValidateOccasion,
-  IFormFieldPropsBase,
-  IFormFieldProps,
   IFormComponentProps,
-  IFormFieldChildProps,
 } from './shared';
 
 function makeContext(
@@ -49,9 +46,7 @@ function makeContext(
   };
 }
 
-export interface IFormProps<
-  T extends Record<string, BasicModel<unknown>> = any
->
+export interface IFormProps<T extends {}>
   extends Omit<
     React.FormHTMLAttributes<HTMLFormElement>,
     'onSubmit' | 'dangerouslySetInnerHTML'
@@ -60,7 +55,7 @@ export interface IFormProps<
    * 表单布局，支持水平布局和垂直布局
    * @defaultValue `'vertical'`
    */
-  layout: 'horizontal' | 'vertical';
+  layout?: 'horizontal' | 'vertical';
   /**
    * `useForm`得到的`model`
    */
@@ -91,9 +86,7 @@ export interface IFormProps<
   disableEnterSubmit?: boolean;
 }
 
-export class Form<
-  T extends Record<string, BasicModel<unknown>> = any
-> extends React.Component<IFormProps<T>> {
+export class Form<T extends {}> extends React.Component<IFormProps<T>> {
   static displayName = 'ZentForm';
 
   static CombineErrors = CombineErrors;
@@ -108,6 +101,7 @@ export class Form<
   static FieldValue = FieldValue;
   static FieldSetValue = FieldSetValue;
   static useFieldArrayValue = useFieldArrayValue;
+  static useFieldValue = useFieldValue;
   static ValidateOption = ValidateOption;
   static createAsyncValidator = createAsyncValidator;
   static isAsyncValidator = isAsyncValidator;
@@ -148,7 +142,9 @@ export class Form<
     if (!onSubmit) {
       return;
     }
+
     try {
+      form.submitStart();
       await form.validate(
         ValidateOption.IncludeAsync |
           ValidateOption.IncludeChildrenRecursively |
@@ -163,7 +159,7 @@ export class Form<
       form.submitSuccess();
     } catch (error) {
       onSubmitFail && onSubmitFail(error);
-      form.submitError(error);
+      form.submitError();
     }
   }
 
@@ -185,12 +181,12 @@ export class Form<
     this.submit(e);
   };
 
-  private listenEvents() {
+  private subscribe() {
     const { form } = this.props;
     this.subscription = form.submit$.subscribe(this.submitListener);
   }
 
-  private removeEventListeners() {
+  private unsubscribe() {
     if (this.subscription) {
       this.subscription.unsubscribe();
       this.subscription = null;
@@ -198,18 +194,18 @@ export class Form<
   }
 
   componentDidMount() {
-    this.listenEvents();
+    this.subscribe();
   }
 
   componentDidUpdate(prevProps: IFormProps<T>) {
     if (prevProps.form !== this.props.form) {
-      this.removeEventListeners();
-      this.listenEvents();
+      this.unsubscribe();
+      this.subscribe();
     }
   }
 
   componentWillUnmount() {
-    this.removeEventListeners();
+    this.unsubscribe();
   }
 
   render() {

@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import { IGridInnerColumn } from './Grid';
 import { IGridCellPos } from './types';
 import isNil from '../utils/isNil';
+import getFromPath from '../utils/getFromPath';
 
 interface IGridCellProps<Data> {
   column: IGridInnerColumn<Data>;
@@ -56,7 +57,7 @@ class Cell<Data> extends Component<IGridCellProps<Data>> {
       className,
       defaultText,
     } = column;
-    let text = data?.[name];
+    let text: any = getFromPath(data, name);
     if (isNil(text) && defaultText) {
       text = defaultText;
     }
@@ -87,6 +88,9 @@ class Cell<Data> extends Component<IGridCellProps<Data>> {
         className={classnames(`${prefix}-grid-td`, className, {
           [`${prefix}-grid-text-align-${textAlign}`]: textAlign,
           [`${prefix}-grid-nowrap`]: nowrap,
+          [`${prefix}-grid-td-multiple-row`]: tdProps && tdProps.rowSpan > 1,
+          [`${prefix}-grid-td-selection`]: column.key === 'selection-column',
+          [`${prefix}-grid-td-expand`]: column.key === 'expand-column',
         })}
         {...tdProps}
         onClick={this.onClick}
