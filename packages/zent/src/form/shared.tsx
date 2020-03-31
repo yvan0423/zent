@@ -40,8 +40,17 @@ export interface IFormFieldViewDrivenProps<T> {
 export interface IFormFieldModelDrivenProps<T> {
   /**
    * 表单项对应的数据
+   * 只有 FormStrategy 是 View 的时候才会出现 ModelRef
    */
   model: FieldModel<T>;
+  /**
+   * 仅当 model 是个 ModelRef 的时候有效。
+   */
+  validators?: IValidators<T>;
+  /**
+   * 仅当 model 是个 ModelRef 的时候有效。
+   */
+  defaultValue: T | (() => T);
 }
 
 export type IFormFieldModelProps<T> =
@@ -86,7 +95,8 @@ export enum TouchWhen {
 }
 
 export interface IFormFieldPropsBase<Value>
-  extends Omit<IFormControlProps, 'required' | 'invalid'> {
+  extends Omit<IFormControlProps, 'required' | 'invalid'>,
+    Partial<Omit<IFormFieldChildProps<Value>, 'value'>> {
   /**
    * 自定义错误渲染，参数是 `validator` 返回的对象，一次只会有一个错误
    */
@@ -159,7 +169,7 @@ export type IFormComponentProps<
 }) &
   (
     | Optional<IFormFieldViewDrivenProps<Value>, 'defaultValue'>
-    | IFormFieldModelDrivenProps<Value>
+    | Optional<IFormFieldModelDrivenProps<Value>, 'defaultValue'>
   );
 
 export function dateDefaultValueFactory(): DatePickers.Value {

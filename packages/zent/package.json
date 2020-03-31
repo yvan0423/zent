@@ -1,6 +1,6 @@
 {
   "name": "zent",
-  "version": "8.0.1",
+  "version": "8.3.0",
   "description": "一套前端设计语言和基于React的实现",
   "bugs": "https://github.com/youzan/zent/issues",
   "repository": {
@@ -23,7 +23,7 @@
     "theme": "./scripts/build-theme.sh",
     "new-component": "node ./scripts/new-component.js",
     "typedoc": "typedoc --out ../../site/dist/apidoc --mode file",
-    "compile-plugins": "tsc plugins/*.ts -m commonjs",
+    "compile-plugins": "tsc -p ./plugins/tsconfig.json",
     "update-iconfont": "./scripts/update-iconfont.sh"
   },
   "author": "Youzan FE",
@@ -42,7 +42,7 @@
     "big.js": "^5.2.2",
     "classnames": "^2.2.6",
     "date-fns": "^2.7.0",
-    "formulr": "~0.2.10",
+    "formulr": "0.3.0",
     "react-is": "^16.8.1",
     "react-transition-group": "^2.6.0",
     "sortablejs": "~1.9.0",
@@ -70,8 +70,8 @@
     "postcss-scss": "^2.0.0",
     "postcss-selector-parser": "^6.0.2",
     "postcss-value-parser": "^4.0.2",
-    "react": "16.10.x",
-    "react-dom": "16.10.x",
+    "react": "16.11.x",
+    "react-dom": "16.11.x",
     "sass": "^1.22.7",
     "ts-jest": "^24.0.0",
     "ts-node": "^8.0.3",

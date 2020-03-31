@@ -8,6 +8,7 @@ import {
   IUploadFileItem,
   IUploadFileItemInner,
   IUploadOnErrorHandler,
+  IUploadItemProps,
 } from '../types';
 import { patchUploadItemId } from '../utils/id';
 import { wrapPromise } from '../utils/wrap-promise';
@@ -19,7 +20,12 @@ export interface IAbstractUploadState<UPLOAD_ITEM extends IUploadFileItem> {
 abstract class AbstractUpload<
   UPLOAD_ITEM extends IUploadFileItem,
   ON_UPLOAD_SUCCESS_RETURN,
-  P extends IAbstractUploadProps<UPLOAD_ITEM, ON_UPLOAD_SUCCESS_RETURN>
+  UPLOAD_ITEM_COMP_PROPS extends IUploadItemProps<UPLOAD_ITEM>,
+  P extends IAbstractUploadProps<
+    UPLOAD_ITEM,
+    ON_UPLOAD_SUCCESS_RETURN,
+    UPLOAD_ITEM_COMP_PROPS
+  >
 > extends React.PureComponent<P, IAbstractUploadState<UPLOAD_ITEM>> {
   constructor(props: P) {
     super(props);
@@ -45,7 +51,11 @@ abstract class AbstractUpload<
   }
 
   static getDerivedStateFromProps(
-    nextProps: IAbstractUploadProps<IUploadFileItem>
+    nextProps: IAbstractUploadProps<
+      IUploadFileItem,
+      any,
+      IUploadItemProps<IUploadFileItem>
+    >
   ) {
     if ('fileList' in nextProps) {
       return {
@@ -68,20 +78,11 @@ abstract class AbstractUpload<
   }
 
   /**
-   * 在队列中的可用上传文件
-   */
-  get availableUploadItemsCount() {
-    return this.fileList.filter(
-      item => item.status !== FILE_UPLOAD_STATUS.failed
-    ).length;
-  }
-
-  /**
    * 剩余可上传文件数量
    */
   get remainAmount() {
     const { maxAmount } = this.props;
-    return maxAmount - this.availableUploadItemsCount;
+    return maxAmount - this.fileList.length;
   }
 
   private getUploadItem(id: string): IUploadFileItemInner<UPLOAD_ITEM> {

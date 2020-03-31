@@ -15,6 +15,7 @@ import {
   IUploadFileItemInner,
   IUploadProps,
   IUploadTipConfig,
+  INormalUploadItemProps,
 } from './types';
 import { formatFileSize } from './utils/format-file-size';
 import { getTipsContent } from './utils/get-tips-content';
@@ -36,6 +37,7 @@ type IUploadPropsInner = PartialRequired<
 export class Upload extends AbstractUpload<
   IUploadFileItem,
   void,
+  INormalUploadItemProps,
   IUploadProps
 > {
   static defaultProps: Partial<IUploadProps> = {
@@ -47,6 +49,8 @@ export class Upload extends AbstractUpload<
     pageSize: 5,
     pagination: false,
   };
+
+  static FILE_UPLOAD_STATUS = FILE_UPLOAD_STATUS;
 
   protected createNewUploadFileItem(
     file: File
@@ -75,7 +79,7 @@ export class Upload extends AbstractUpload<
   }
 
   protected renderUploadList(i18n: II18nLocaleUpload): React.ReactNode {
-    const { sortable, pagination, pageSize } = this.props;
+    const { sortable, pagination, pageSize, customUploadItem } = this.props;
     return (
       <NormalUploadList
         i18n={i18n}
@@ -86,6 +90,7 @@ export class Upload extends AbstractUpload<
         sortable={sortable}
         pagination={pagination}
         pageSize={pageSize}
+        customUploadItem={customUploadItem}
       />
     );
   }
@@ -102,7 +107,6 @@ export class Upload extends AbstractUpload<
         maxSize={maxSize}
         multiple={multiple}
         disabled={disabled}
-        availableUploadItemsCount={this.availableUploadItemsCount}
         remainAmount={this.remainAmount}
         fileList={fileList}
         onAddFile={this.onTriggerUploadFile}
